@@ -61,3 +61,58 @@ let keysRus2 = ['Tab','й','ц','у','к','е','н','г','ш','щ','з','х','Ъ
 let keysRus3 = ['CapsLock','ф','ы','в','а','п','р','о','л','д','ж','э','Enter']
 let keysRus4 = ['Shift','я','ч','с','м','и','т','ь','б','ю','.','^','Shift']
 let keysRus5 = ['Ctrl','Alt','__________','Alt','Ctrl','Home','Down','End']
+
+let div1 = document.createElement('div');
+  div1.className = "keyboard-row"
+// let keyboard = document.querySelector("div.keyboard"); 
+  keyboard.appendChild(div1);
+
+  function createBtns(keys, div){
+    keys.forEach(k => {
+        console.log(k)
+        let btn = document.createElement("button");
+        btn.innerHTML = k;
+        btn.type = "submit";
+        btn.name = "Btn"+ k;
+        btn.id = k;
+        btn.className = 'keyboard-key';
+        div.append(btn);
+        if (String(k).length===1)
+        btn.addEventListener('click', function handleClick() {
+          textarea.selectionStart = textareaPos;
+          textarea.selectionEnd = textareaPos;
+
+          textarea.value = textarea.value.substring(0, textareaPos) + k + textarea.value.substring(textarea.selectionStart);
+
+          textareaPos = textareaPos + 1;
+          console.log('virtu '+ textareaPos);
+        });
+      });
+  }
+
+  createBtns(keys1,div1);
+
+ 
+let div2 = document.createElement('div');
+  div2.className = "keyboard-row"
+  keyboard.appendChild(div2);
+
+createBtns(keys2,div2);
+
+let div3 = document.createElement('div');
+  div3.className = "keyboard-row"
+  keyboard.appendChild(div3);
+
+createBtns(keys3,div3);
+
+let div4 = document.createElement('div');
+  div4.className = "keyboard-row"
+  keyboard.appendChild(div4);
+
+createBtns(keys4,div4);
+
+let div5 = document.createElement('div');
+  div5.className = "keyboard-row"
+  keyboard.appendChild(div5);
+
+createBtns(keys5,div5);
