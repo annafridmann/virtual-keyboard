@@ -223,3 +223,19 @@ runOnKeys(
   "ShiftLeft"
 );
 
+let prevEl = null;
+
+document.onkeydown = function (e) {
+  document.getElementById("textarea").focus();
+  e = e || window.event;
+  let el = document.getElementById(e.key);
+  if (prevEl !== null){
+    prevEl.style.backgroundColor = "#444444";
+    prevEl = el;
+    if (el)
+    el.style.backgroundColor = "#a7308d";
+  }
+  if (el)
+  el.style.backgroundColor = "#a7308d";
+  prevEl = el;
+};
