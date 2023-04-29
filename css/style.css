@@ -56,3 +56,56 @@ body {
     height: 50px;
     margin: auto;
 }
+#Tab{
+    width: 50px;
+}
+#Backspace{
+    width: 96px;
+}
+#CapsLock{
+    width: 80px;
+}
+#Enter{
+    width: 100px;
+}
+#Shift{
+    width: 90px;
+}
+#__________{
+    width: 310px;
+}
+#Home, 
+#End,
+#Down{
+  width: 60px;
+}
+
+.keyboard-key:hover{
+    background: #cbadc4;
+}
+
+.keyboard-key:active{
+    background: #a7308d;
+}
+
+.keyboard-hidden {
+    display: none;
+}
+.keyboard-show{
+    display: block;
+}
+.keyboard-rus-hidden{
+    display: none;
+}
+.keyboard-rus-shown{
+    display: block;
+}
+.description{
+    width: 700px;
+    margin: 0 auto;
+    font-size: 15px;
+    color: rgba(189, 77, 209, 0.8);
+    /* -webkit-text-stroke: 1px rgba(114,177,101,0.8);
+    -webkit-text-fill-color: rgba(101,134,177,0.8); */
+    text-align: center;
+}

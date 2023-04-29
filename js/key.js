@@ -153,3 +153,26 @@ let description = document.createElement('p');
   description.className = "description";
   description.innerHTML = "Для переключения языка нажмите комбинацию левых клавиш Shift + Alt";
   document.body.append(description);
+
+let backspace = document.getElementById('Backspace')
+backspace.addEventListener('click', function handleClick() {
+  textarea.selectionStart = textareaPos;
+  textarea.value = textarea.value.substring(0, textarea.selectionStart -1)+textarea.value.substring(textarea.selectionStart );
+  textareaPos = textareaPos - 1
+  textarea.selectionStart = textareaPos;
+  textarea.selectionEnd = textareaPos;
+});
+
+let enter = document.getElementById('Enter')
+enter.addEventListener('click', function handleClick() {
+  textarea.value = textarea.value +"\n";
+  textarea.focus();
+});
+
+let del = document.getElementById('Del')
+del.addEventListener('click', function handleClick() {
+  textarea.selectionStart = textareaPos;
+  textarea.value = textarea.value.substring(0, textarea.selectionStart)+textarea.value.substring(textarea.selectionStart+1);
+  textarea.selectionStart = textareaPos;
+  textarea.selectionEnd = textareaPos;
+});
