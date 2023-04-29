@@ -176,3 +176,50 @@ del.addEventListener('click', function handleClick() {
   textarea.selectionStart = textareaPos;
   textarea.selectionEnd = textareaPos;
 });
+
+let eng = document.querySelector('#keyboard');
+let rus = document.querySelector('#keyboard1');
+
+
+
+function runOnKeys(func, ...codes) {
+  let pressed = new Set();
+
+  document.addEventListener('keydown', function(event) {
+    pressed.add(event.code);
+
+    for (let code of codes) { // все ли клавиши из набора нажаты?
+      if (!pressed.has(code)) {
+        return;
+      }
+    }
+    pressed.clear();
+    func();
+  });
+
+  document.addEventListener('keyup', function(event) {
+    pressed.delete(event.code);
+    
+  });
+
+}
+
+
+function langChange(event){
+  if (eng.classList.contains('keyboard-show')){
+      eng.classList.remove('keyboard-show');
+      eng.classList.add('keyboard-hidden');
+      rus.classList.remove('keyboard-rus-hidden');
+  } else {      
+      rus.classList.add('keyboard-rus-hidden');
+      eng.classList.add('keyboard-show');
+  }
+
+}
+
+runOnKeys(
+  () => langChange(),
+  "AltLeft",
+  "ShiftLeft"
+);
+
