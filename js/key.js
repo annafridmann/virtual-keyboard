@@ -116,3 +116,40 @@ let div5 = document.createElement('div');
   keyboard.appendChild(div5);
 
 createBtns(keys5,div5);
+
+let divkeyboardRus = document.createElement('div');
+  divkeyboardRus.className = "keyboard keyboard-rus-hidden";
+  divkeyboardRus.id = "keyboard1";
+  document.body.append(divkeyboardRus);
+
+let div1Rus = document.createElement('div');
+  div1Rus.className = "keyboard-row"
+  divkeyboardRus.appendChild(div1Rus);
+
+createBtns(keysRus1,div1Rus);
+
+let div2Rus = document.createElement('div');
+  div2Rus.className = "keyboard-row"
+  divkeyboardRus.appendChild(div2Rus);
+  createBtns(keysRus2,div2Rus);
+
+let div3Rus = document.createElement('div');
+  div3Rus.className = "keyboard-row"
+  divkeyboardRus.appendChild(div3Rus);
+createBtns(keysRus3,div3Rus);
+
+let div4Rus = document.createElement('div');
+  div4Rus.className = "keyboard-row"
+  divkeyboardRus.appendChild(div4Rus);
+createBtns(keysRus4,div4Rus);
+
+let div5Rus = document.createElement('div');
+  div5Rus.className = "keyboard-row"
+  divkeyboardRus.appendChild(div5Rus);    
+
+createBtns(keysRus5,div5Rus);
+
+let description = document.createElement('p');
+  description.className = "description";
+  description.innerHTML = "Для переключения языка нажмите комбинацию левых клавиш Shift + Alt";
+  document.body.append(description);
