@@ -13,6 +13,8 @@ textarea.addEventListener('focus', () => { //сохраняем курсор п�
   textarea.selectionStart = textareaPos;
 });
 
+
+
 textarea.addEventListener('input', () => { //ввод с клавиатуры
   textareaPos = textarea.selectionStart;
   console.log('input'+ textareaPos );
@@ -28,6 +30,21 @@ textarea.id = "textarea";
 textarea.rows = 5;
 textarea.cols = 50;
 document.body.append(textarea);
+
+document.getElementById('textarea').addEventListener('keydown', function(e) {
+  if (e.key == 'Tab') {
+    e.preventDefault();
+    var start = textarea.selectionStart;
+    var end = textarea.selectionEnd;
+
+    this.value = textarea.value.substring(0, start) +
+      "\t" + textarea.value.substring(end);
+
+    console.log('real tab '+ textarea.selectionStart + textarea.selectionEnd);
+    textarea.selectionStart = 
+      textarea.selectionEnd = start + 1;
+  }
+});
 
 let description = document.createElement('p');
 description.className = "description";
@@ -52,40 +69,35 @@ let keysRus3 = ['CapsLock','ф','ы','в','а','п','р','о','л','д','ж','э
 let keysRus4 = ['Shift','я','ч','с','м','и','т','ь','б','ю','.','^','Shift']
 let keysRus5 = ['Ctrl','Alt','Space','Alt','Ctrl','Home','Down','End']
 
-  function createBtns(keys, div){
-    keys.forEach(k => {
-        console.log(k)
-        let btn = document.createElement("button");
-        btn.innerHTML = k;
-        btn.type = "submit";
-        btn.name = "Btn"+ k;
-        btn.id = k;
-        btn.className = 'keyboard-key';
-        div.append(btn);
-        if (String(k).length===1)
-        btn.addEventListener('click', function handleClick() {
-          textarea.selectionStart = textareaPos;
-          textarea.selectionEnd = textareaPos;
-            
-          
-          
-          if (capsLock){
-              textarea.value = textarea.value.substring(0, textareaPos) + String(k).toUpperCase() + textarea.value.substring(textarea.selectionStart);
-              CapsLock.classList.add('capslock-pressed');
-            } else {
-              textarea.value = textarea.value.substring(0, textareaPos) + k + textarea.value.substring(textarea.selectionStart);
-              CapsLock.classList.remove('capslock-pressed');
-            }
-
-          
-
-          textareaPos = textareaPos + 1;
-          console.log('virtu '+ textareaPos);
-        });
+function createBtns(keys, div){
+  keys.forEach(k => {
+    let btn = document.createElement("button");
+    btn.innerHTML = k;
+    btn.type = "submit";
+    btn.name = "Btn"+ k;
+    btn.id = k;
+    btn.className = 'keyboard-key';
+    div.append(btn);
+    if (String(k).length===1)
+      btn.addEventListener('click', function handleClick() {
+        textarea.selectionStart = textareaPos;
+        textarea.selectionEnd = textareaPos;
+        
+        if (capsLock){
+          textarea.value = textarea.value.substring(0, textareaPos) + String(k).toUpperCase() + textarea.value.substring(textarea.selectionStart);
+          CapsLock.classList.add('capslock-pressed');
+        } else {
+            textarea.value = textarea.value.substring(0, textareaPos) + k + textarea.value.substring(textarea.selectionStart);
+            CapsLock.classList.remove('capslock-pressed');
+          }
+     
+        textareaPos = textareaPos + 1;
+        console.log('virtu '+ textareaPos);
       });
-  }
+  });
+}
 
-  langChange();
+langChange();
 
   function keyboardActions() {
     let backspace = document.getElementById('Backspace')
@@ -99,9 +111,16 @@ let keysRus5 = ['Ctrl','Alt','Space','Alt','Ctrl','Home','Down','End']
 
     let enter = document.getElementById('Enter')
     enter.addEventListener('click', function handleClick() {
+      textarea.selectionStart = textareaPos;
+      textarea.selectionEnd = textareaPos;
+
+      textarea.value = textarea.value.substring(0, textareaPos) +  "\n" + textarea.value.substring(textarea.selectionStart);
+
+      textareaPos = textareaPos + 1;
       textarea.focus();
-      textarea.value = textarea.value +"\n";
-      textareaPos = textareaPos +"\n";
+      textarea.selectionStart = textareaPos;
+      textarea.selectionEnd = textareaPos;
+      console.log('virtu enter'+ textareaPos);
     });
 
     let space = document.getElementById('Space');
@@ -117,22 +136,6 @@ let keysRus5 = ['Ctrl','Alt','Space','Alt','Ctrl','Home','Down','End']
     });
 
     let tab = document.getElementById('Tab');
-    document.getElementById('textarea').addEventListener('keydown', function(e) {
-      if (e.key == 'Tab') {
-        var start = textarea.selectionStart;
-        var end = textarea.selectionEnd;
-
-        // set textarea value to: text before caret + tab + text after caret
-        this.value = textarea.value.substring(0, start) +
-          "\t" + textarea.value.substring(end);
-
-        // put caret at right position again
-        console.log('real tab '+ textarea.selectionStart + textarea.selectionEnd);
-        textarea.selectionStart =
-        textarea.selectionEnd = start + 1;
-      }
-    });
-
     tab.addEventListener('click', function handleClick() {
       textarea.selectionStart = textareaPos;
       textarea.selectionEnd = textareaPos;
@@ -188,12 +191,23 @@ let keysRus5 = ['Ctrl','Alt','Space','Alt','Ctrl','Home','Down','End']
       textarea.selectionEnd = textareaPos;
     });
 
-    // let eng = document.querySelector('#keyboard');
-    // let rus = document.querySelector('#keyboard1');
+    let prevEl = null;
+
+    document.onkeydown = function (e) {
+      document.getElementById("textarea").focus();
+      e = e || window.event;
+      let el = document.getElementById(e.key);
+      if (prevEl !== null){
+        prevEl.style.backgroundColor = "#444444";
+        prevEl = el;
+        if (el)
+        el.style.backgroundColor = "#a7308d";
+      }
+      if (el)
+        el.style.backgroundColor = "#a7308d";
+      prevEl = el;
+    };
 }
-
-
-
 
 function runOnKeys(func, ...codes) {
   let pressed = new Set();
@@ -214,12 +228,13 @@ function runOnKeys(func, ...codes) {
     pressed.delete(event.code);
     
   });
-
 }
 
 
 function langChange(){
-  document.getElementById("keyboard").remove();
+  let keyboardEl = document.getElementById("keyboard");
+  if (keyboardEl) keyboardEl.remove();
+
   if (lang === 'Rus'){
     createRusKeyboard();
     keyboardActions();
@@ -238,26 +253,6 @@ runOnKeys(
   "ShiftLeft"
 );
 
-
-let prevEl = null;
-
-document.onkeydown = function (e) {
-  document.getElementById("textarea").focus();
-  e = e || window.event;
-  let el = document.getElementById(e.key);
-  if (prevEl !== null){
-    prevEl.style.backgroundColor = "#444444";
-    prevEl = el;
-    if (el)
-    el.style.backgroundColor = "#a7308d";
-  }
-  if (el)
-  el.style.backgroundColor = "#a7308d";
-
-  prevEl = el;
-};
-
-
 function createGbKeyboard() {
 
   let divkeyboard = document.createElement('div');// создаем контейнер (для ряда)
@@ -270,7 +265,6 @@ function createGbKeyboard() {
   divkeyboard.appendChild(div1);
 
   createBtns(keys1,div1);
-
  
   let div2 = document.createElement('div');
   div2.className = "keyboard-row"
