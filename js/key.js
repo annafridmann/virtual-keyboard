@@ -1,4 +1,5 @@
 let textareaPos = 0; //позиция курсора
+let capsLock = false;
 
 let title = document.createElement('p');
   title.className = "title";
@@ -81,8 +82,16 @@ let div1 = document.createElement('div');
         btn.addEventListener('click', function handleClick() {
           textarea.selectionStart = textareaPos;
           textarea.selectionEnd = textareaPos;
+            
+          
+          
+          if (capsLock){
+              textarea.value = textarea.value.substring(0, textareaPos) + String(k).toUpperCase() + textarea.value.substring(textarea.selectionStart);
+            } else {
+              textarea.value = textarea.value.substring(0, textareaPos) + k + textarea.value.substring(textarea.selectionStart);
+            }
 
-          textarea.value = textarea.value.substring(0, textareaPos) + k + textarea.value.substring(textarea.selectionStart);
+          
 
           textareaPos = textareaPos + 1;
           console.log('virtu '+ textareaPos);
@@ -170,12 +179,67 @@ enter.addEventListener('click', function handleClick() {
   textareaPos = textareaPos +"\n";
 });
 
-let tab = document.getElementById('Tab')
+let tab = document.getElementById('Tab');
+
+// document.addEventListener('keydown', function(event) {
+//   if (event.code === 'Tab'){
+//         textarea.focus();
+//         textarea.value = textarea.value.substring(0, textarea.selectionStart + "    ");
+
+//   }
+// });
+
+document.getElementById('textarea').addEventListener('keydown', function(e) {
+  if (e.key == 'Tab') {
+   var start = textarea.selectionStart;
+    var end = textarea.selectionEnd;
+
+    // set textarea value to: text before caret + tab + text after caret
+    this.value = textarea.value.substring(0, start) +
+      "\t" + textarea.value.substring(end);
+
+    // put caret at right position again
+    console.log('real tab '+ textarea.selectionStart + textarea.selectionEnd);
+    textarea.selectionStart =
+    textarea.selectionEnd = start + 1;
+  }
+});
+
 tab.addEventListener('click', function handleClick() {
+
+  textarea.selectionStart = textareaPos;
+  textarea.selectionEnd = textareaPos;
+
+  textarea.value = textarea.value.substring(0, textareaPos) +  "\t" + textarea.value.substring(textarea.selectionStart);
+
+  textareaPos = textareaPos + 1;
   textarea.focus();
-  textarea.value = textarea.value +"    ";
+  textarea.selectionStart = textareaPos;
+  textarea.selectionEnd = textareaPos;
+  console.log('virtu tab'+ textareaPos);
+});
+
+let CapsLock = document.getElementById('CapsLock');
+CapsLock.addEventListener('click', function handleClick() {
+  if (capsLock == false) {
+    capsLock = true;
+  } else {
+    capsLock = false;
+  }
   
 });
+
+document.addEventListener('keyup', (e) => {
+  if (e.getModifierState('CapsLock')) {
+    capsLock = true;
+    console.log("Caps Lock is on");
+  } else {
+    capsLock = false;
+    console.log("Caps Lock is off");
+  }
+});
+
+
 
 
 let del = document.getElementById('Del')
@@ -231,6 +295,7 @@ runOnKeys(
   "AltLeft",
   "ShiftLeft"
 );
+
 
 let prevEl = null;
 
