@@ -165,9 +165,18 @@ backspace.addEventListener('click', function handleClick() {
 
 let enter = document.getElementById('Enter')
 enter.addEventListener('click', function handleClick() {
-  textarea.value = textarea.value +"\n";
   textarea.focus();
+  textarea.value = textarea.value +"\n";
+  textareaPos = textareaPos +"\n";
 });
+
+let tab = document.getElementById('Tab')
+tab.addEventListener('click', function handleClick() {
+  textarea.focus();
+  textarea.value = textarea.value +"    ";
+  
+});
+
 
 let del = document.getElementById('Del')
 del.addEventListener('click', function handleClick() {
