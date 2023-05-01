@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 600;  
+    font-size: 35px;
+    margin: 0 auto;
+}
+.title{
+    width: 700px;
+    /* height: 200px; */
+    margin: 0 auto;
+    font-size: 30px;
+    color: rgba(189, 77, 209, 0.8);
+    /* -webkit-text-stroke: 1px rgba(114,177,101,0.8);
+    -webkit-text-fill-color: rgba(101,134,177,0.8); */
+    text-align: center;
+}
+.body-keyboard {
+    display: block;
+    width: 700px;
+    height: 200px;
+    margin: 10px auto 10px;
+    padding: 10px;
+    font-size: 18px;
+    border-color: #a7308d;
+    border-radius: 10px;
+
+}
+.keyboard{
+    background-color: #e8cbe2;
+    border-radius: 10px;
+    margin: 10px auto 10px;
+    width: 720px;
+    height: 300px;
+
+}
+.keyboard-key{
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-left: 6px;
+    font-weight: 500;
+    line-height: 40px;
+    text-align: center;
+    color: #ffffff;
+    background: #444444;
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-radius 0.3s, background-color 0.3s;
+}
+
+.keyboard-row{
+    padding-top: 10px;
+    width: 700px;
+    height: 50px;
+    margin: auto;
+}
+#Tab{
+    width: 50px;
+}
+#Backspace{
+    width: 96px;
+}
+#CapsLock{
+    width: 80px;
+}
+#Enter{
+    width: 100px;
+}
+#Shift{
+    width: 90px;
+}
+#Space{
+    width: 310px;
+}
+#Home, 
+#End,
+#Down{
+  width: 60px;
+}
+
+.keyboard-key:hover{
+    background: #cbadc4;
+}
+
+.keyboard-key:active{
+    background: #a7308d;
+    transform: scale(1.2); /*Вылазит окошко вперед*/
+    transition: 0.2s; /*Вылазит окошко медленно*/
+}
+
+.keyboard-hidden {
+    display: none;
+}
+.keyboard-show{
+    display: block;
+}
+.keyboard-rus-hidden{
+    display: none;
+}
+.keyboard-rus-shown{
+    display: block;
+}
+.description{
+    width: 700px;
+    margin: 0 auto;
+    font-size: 15px;
+    color: rgba(189, 77, 209, 0.8);
+    /* -webkit-text-stroke: 1px rgba(114,177,101,0.8);
+    -webkit-text-fill-color: rgba(101,134,177,0.8); */
+    text-align: center;
+}
+.capslock-pressed{
+    
+    transform: scale(1.2); /*Вылазит окошко вперед*/
+    transition: 0.5s; /*Вылазит окошко медленно*/
+}
