@@ -56,12 +56,12 @@ let keys1 = ['`','1','2','3','4','5','6','7','8','9','0','-','=','Backspace']
 let keys2 = ['Tab','q','w','e','r','t','y','u','i','o','p','[',']','|','Del']
 let keys3 = ['CapsLock','a','s','d','f','g','h','j','k','l',';',"'",'Enter']
 let keys4 = ['Shift','z','x','c','v','b','n','m',',','.','/','^','Shift']
-let keys5 = ['Ctrl','Alt','__________','Alt','Ctrl','Home','Down','End']
+let keys5 = ['Ctrl','Alt','Space','Alt','Ctrl','Home','Down','End']
 let keysRus1 = ['ё','!','@','#','$','%','^','&','*','(',')','_','=','Backspace']
 let keysRus2 = ['Tab','й','ц','у','к','е','н','г','ш','щ','з','х','Ъ','|','Del']
 let keysRus3 = ['CapsLock','ф','ы','в','а','п','р','о','л','д','ж','э','Enter']
 let keysRus4 = ['Shift','я','ч','с','м','и','т','ь','б','ю','.','^','Shift']
-let keysRus5 = ['Ctrl','Alt','__________','Alt','Ctrl','Home','Down','End']
+let keysRus5 = ['Ctrl','Alt','Space','Alt','Ctrl','Home','Down','End']
 
 let div1 = document.createElement('div');
   div1.className = "keyboard-row"
@@ -87,8 +87,10 @@ let div1 = document.createElement('div');
           
           if (capsLock){
               textarea.value = textarea.value.substring(0, textareaPos) + String(k).toUpperCase() + textarea.value.substring(textarea.selectionStart);
+              CapsLock.classList.add('capslock-pressed');
             } else {
               textarea.value = textarea.value.substring(0, textareaPos) + k + textarea.value.substring(textarea.selectionStart);
+              CapsLock.classList.remove('capslock-pressed');
             }
 
           
@@ -163,6 +165,8 @@ let description = document.createElement('p');
   description.innerHTML = "Для переключения языка нажмите комбинацию левых клавиш Shift + Alt";
   document.body.append(description);
 
+
+
 let backspace = document.getElementById('Backspace')
 backspace.addEventListener('click', function handleClick() {
   textarea.selectionStart = textareaPos;
@@ -179,16 +183,24 @@ enter.addEventListener('click', function handleClick() {
   textareaPos = textareaPos +"\n";
 });
 
+let space = document.getElementById('Space');
+
+
+space.addEventListener('click', function handleClick() {
+  textarea.selectionStart = textareaPos;
+  textarea.selectionEnd = textareaPos;
+
+  textarea.value = textarea.value.substring(0, textareaPos) +  " " + textarea.value.substring(textarea.selectionStart);
+
+  textareaPos = textareaPos + 1;
+  textarea.focus();
+  textarea.selectionStart = textareaPos;
+  textarea.selectionEnd = textareaPos;
+  console.log('virtu tab'+ textareaPos);
+});
+
+
 let tab = document.getElementById('Tab');
-
-// document.addEventListener('keydown', function(event) {
-//   if (event.code === 'Tab'){
-//         textarea.focus();
-//         textarea.value = textarea.value.substring(0, textarea.selectionStart + "    ");
-
-//   }
-// });
-
 document.getElementById('textarea').addEventListener('keydown', function(e) {
   if (e.key == 'Tab') {
    var start = textarea.selectionStart;
@@ -223,10 +235,26 @@ let CapsLock = document.getElementById('CapsLock');
 CapsLock.addEventListener('click', function handleClick() {
   if (capsLock == false) {
     capsLock = true;
+    CapsLock.classList.add('capslock-pressed')
+    
   } else {
     capsLock = false;
+    CapsLock.classList.remove('capslock-pressed')
   }
   
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'CapsLock'){
+    if (capsLock == false) {
+      capsLock = true;
+      CapsLock.classList.add('capslock-pressed');
+      
+    } else {
+      capsLock = false;
+      CapsLock.classList.remove('capslock-pressed');
+    }
+  }
 });
 
 document.addEventListener('keyup', (e) => {
@@ -311,5 +339,6 @@ document.onkeydown = function (e) {
   }
   if (el)
   el.style.backgroundColor = "#a7308d";
+
   prevEl = el;
 };

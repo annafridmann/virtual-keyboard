@@ -71,7 +71,7 @@ body {
 #Shift{
     width: 90px;
 }
-#__________{
+#Space{
     width: 310px;
 }
 #Home, 
@@ -86,6 +86,8 @@ body {
 
 .keyboard-key:active{
     background: #a7308d;
+    transform: scale(1.2); /*Вылазит окошко вперед*/
+    transition: 0.2s; /*Вылазит окошко медленно*/
 }
 
 .keyboard-hidden {
@@ -108,4 +110,9 @@ body {
     /* -webkit-text-stroke: 1px rgba(114,177,101,0.8);
     -webkit-text-fill-color: rgba(101,134,177,0.8); */
     text-align: center;
+}
+.capslock-pressed{
+    
+    transform: scale(1.2); /*Вылазит окошко вперед*/
+    transition: 0.5s; /*Вылазит окошко медленно*/
 }
